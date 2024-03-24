@@ -1,0 +1,59 @@
+---
+title: "Assignment 9 DATA607"
+author: "Angel Gallardo"
+date: "2024-03-23"
+output: html_document
+---
+
+**Topic: Choose one the the NYT API's and construct an interface in R to read the JSON DATA, and transform into Dataframe.**
+**I will read the most viewed articles for the last seven days**
+
+**Load libraries**
+```{r}
+library(httr)
+library(jsonlite)
+library(dplyr)
+```
+
+
+**NYT API keyt**
+```{r}
+ api_key <-  "U8widxelyFPIQTYG6XD4fI4uCDur2Iem"
+```
+
+
+**Load the website most viewed articles for the last seven days. **
+```{r}
+api_endpoint <- "https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key="
+```
+
+
+
+
+**concatenate the website and API**
+```{r}
+api_url <- paste0(api_endpoint, api_key)
+```
+
+*8Retrieve JSON data**
+```{r}
+json_object <- fromJSON(api_url)
+```
+
+
+**assign the resulkts into a dataframe**
+```{r}
+df <- json_object$results
+class(df)
+```
+
+```{r}
+glimpse(df)
+```
+
+```{r}
+df <- subset(df, select = c(type, section, title, byline, published_date, updated ))
+
+print(df)
+```
+
